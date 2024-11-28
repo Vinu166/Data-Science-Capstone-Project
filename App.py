@@ -2,6 +2,9 @@ import streamlit as st
 import pandas as pd
 import joblib
 
+
+st.set_page_config(layout="wide")
+
 # Load the trained model
 model_path = 'car_price_model.pkl'  # Updated model file name
 model = joblib.load(model_path)
