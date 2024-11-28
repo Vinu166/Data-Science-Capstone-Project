@@ -1,6 +1,3 @@
-Here’s a **README.md** file tailored for your project:
-
----
 
 # **Car Price Prediction App**
 
@@ -76,7 +73,7 @@ Visit the URL displayed in your terminal (e.g., `http://localhost:8501`) to use 
 ## **Deployment**
 This project is deployed publicly using Streamlit Cloud. You can access the live app here:
 
-[**Live App Demo**](#) *(Add your Streamlit app link)*
+[**Live App Demo**](#) *https://data-science-capstone-project-jfa9qiypapmccuac7mxfqh.streamlit.app/*
 
 ---
 
@@ -125,6 +122,3 @@ For queries or feedback:
 - **Email**: surajy88v@gmail.com
 - **GitHub**: github.com/vinu166
 
----
-
-Let me know if you need help tailoring the README further or adding specific details!
