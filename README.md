@@ -120,5 +120,5 @@ This project is licensed under the MIT License.
 ## **Contact**
 For queries or feedback:
 - **Email**: surajy88v@gmail.com
-- **GitHub**: github.com/vinu166
+- **GitHub**: https://github.com/vinu166
 
