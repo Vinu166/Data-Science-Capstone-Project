@@ -3,7 +3,7 @@ import pandas as pd
 import joblib
 
 # Load the trained model
-model_path = 'car_price_model.pk1'  # Updated model file name
+model_path = 'car_price_model.pkl'  # Updated model file name
 model = joblib.load(model_path)
 
 # Streamlit App Title
