@@ -3,7 +3,7 @@ import pandas as pd
 import joblib
 
 # Load the trained model
-model_path = 'car_price_model.pkl'  # Updated model file name
+model_path = 'car_price_model.pk1'  # Updated model file name
 model = joblib.load(model_path)
 
 # Streamlit App Title
@@ -24,32 +24,28 @@ transmission = st.sidebar.selectbox("Transmission Type", options=['Manual', 'Aut
 owner = st.sidebar.selectbox("Owner Type", options=['First Owner', 'Second Owner', 'Third Owner', 
                                                     'Fourth & Above Owner', 'Test Drive Car'])
 
-# Feature Encoding
-feature_mapping = {
-    'fuel': {'Diesel': 0, 'Petrol': 1, 'CNG': 2, 'LPG': 3, 'Electric': 4},
-    'seller_type': {'Dealer': 0, 'Individual': 1, 'Trustmark Dealer': 2},
-    'transmission': {'Manual': 0, 'Automatic': 1},
-    'owner': {'First Owner': 0, 'Second Owner': 1, 'Third Owner': 2, 
-              'Fourth & Above Owner': 3, 'Test Drive Car': 4}
-}
+# Create a DataFrame for user input
+input_data = pd.DataFrame({
+    'km_driven': [km_driven],
+    'car_age': [car_age],
+    'fuel': [fuel],
+    'seller_type': [seller_type],
+    'transmission': [transmission],
+    'owner': [owner]
+})
 
-# Encode user inputs
-encoded_features = {
-    'km_driven': km_driven,
-    'car_age': car_age,
-    'fuel': feature_mapping['fuel'][fuel],
-    'seller_type': feature_mapping['seller_type'][seller_type],
-    'transmission': feature_mapping['transmission'][transmission],
-    'owner': feature_mapping['owner'][owner]
-}
+# One-Hot Encoding to match training data structure
+input_data_encoded = pd.get_dummies(input_data)
 
-# Ensure DataFrame matches model's feature order
-input_df = pd.DataFrame([encoded_features], columns=['km_driven', 'car_age', 'fuel', 'seller_type', 'transmission', 'owner'])
+# Align columns with the training data
+# Ensure all expected columns are present, setting missing ones to 0
+expected_columns = model.feature_names_in_
+input_data_encoded = input_data_encoded.reindex(columns=expected_columns, fill_value=0)
 
 # Prediction
 if st.button("Predict Selling Price"):
     try:
-        prediction = model.predict(input_df)
+        prediction = model.predict(input_data_encoded)
         st.success(f"Estimated Selling Price: ₹{prediction[0]:,.2f}")
     except Exception as e:
         st.error(f"An error occurred: {str(e)}")
