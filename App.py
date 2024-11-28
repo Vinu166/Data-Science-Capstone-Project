@@ -3,12 +3,13 @@ import pandas as pd
 import joblib
 
 # Load the trained model
-model = joblib.load('car_price_model.pkl')
+model_path = 'car_price_model.pk1'  # Updated model file name
+model = joblib.load(model_path)
 
 # Streamlit App Title
 st.title("Car Price Prediction App")
 
-# Sidebar Information
+# Sidebar for User Input
 st.sidebar.header("Input Car Details")
 st.sidebar.markdown("""
 Use the sidebar to enter details about the car for price prediction.
@@ -42,8 +43,13 @@ encoded_features = {
     'owner': feature_mapping['owner'][owner]
 }
 
+# Ensure DataFrame matches model's feature order
+input_df = pd.DataFrame([encoded_features], columns=['km_driven', 'car_age', 'fuel', 'seller_type', 'transmission', 'owner'])
+
 # Prediction
 if st.button("Predict Selling Price"):
-    input_df = pd.DataFrame([encoded_features])
-    prediction = model.predict(input_df)
-    st.success(f"Estimated Selling Price: ₹{prediction[0]:,.2f}")
+    try:
+        prediction = model.predict(input_df)
+        st.success(f"Estimated Selling Price: ₹{prediction[0]:,.2f}")
+    except Exception as e:
+        st.error(f"An error occurred: {str(e)}")
